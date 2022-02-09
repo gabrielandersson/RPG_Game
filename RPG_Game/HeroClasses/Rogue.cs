@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Game
 {
-    abstract class Hero
+    internal class Rogue : Hero
     {
-        public string Name { get; set; }
-        public int Levelj { get; set; }
     }
 }

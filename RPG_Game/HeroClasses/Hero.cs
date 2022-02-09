@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace RPG_Game
 {
-    abstract class Item
+    abstract class Hero
     {
         public string Name { get; set; }
-        public int RequiredLevel { get; set; }
-        public Slot slot { get; set; }
-        
+        public int Level { get; set; }
+        public PrimaryAttribute PrimaryAttribute { get; set; }
+
     }
 }
