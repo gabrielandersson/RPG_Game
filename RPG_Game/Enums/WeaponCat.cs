@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Game
 {
-    enum WeaponCat
+    public enum WeaponCat
     {
         Axes,
         Bows,

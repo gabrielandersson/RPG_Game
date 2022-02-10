@@ -6,11 +6,19 @@ using System.Threading.Tasks;
 
 namespace RPG_Game
 {
-    abstract class Hero
+    public  abstract class Hero
     {
         public string Name { get; set; }
         public int Level { get; set; }
         public PrimaryAttribute PrimaryAttribute { get; set; }
+
+        public Dictionary<Slot, Item> Equipment { get; set; }
+
+
+        public void PrintStats()
+        {
+            Console.WriteLine($"{Name} {PrimaryAttribute.Strength} {PrimaryAttribute.Dexterity} {PrimaryAttribute.Intelligence}");
+        }
 
     }
 }

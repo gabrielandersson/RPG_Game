@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace RPG_Game
 {
-    internal class Warrior : Hero
+    public class Warrior : Hero
     {
+      
     }
 }

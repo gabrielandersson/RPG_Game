@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Game
 {
-    enum ArmorCat
+    public enum ArmorCat
     {
       Cloth,
       Leather,

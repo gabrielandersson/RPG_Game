@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Game
 {
-    enum Slot
+    public enum Slot
     {
         Head,
         Body,
