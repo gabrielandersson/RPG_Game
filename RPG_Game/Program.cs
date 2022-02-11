@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RPG_Game
 {
@@ -8,13 +9,19 @@ namespace RPG_Game
     {
         static void Main(string[] args)
         {
-            HeroFactory factory = new HeroFactory();
-            var gabriel = factory.CreateHero("RaNgeR");
-            Console.WriteLine(gabriel.Name);
-            Console.WriteLine(gabriel.GetType());
+            Warrior gabriel = new Warrior("Gabriel");
+            gabriel.LevelUp();
+            Console.WriteLine($" warrior name: {gabriel.Name}");
+            Console.WriteLine($" warrior level: {gabriel.Level}");
+            Console.WriteLine($" warrior strength: {gabriel.PrimaryAttribute.Strength}");
+            Console.WriteLine($" warrior dexterity: {gabriel.PrimaryAttribute.Dexterity}");
+            Console.WriteLine($" warrior intelligence: {gabriel.PrimaryAttribute.Intelligence}");
+            
+            ItemFactory factory = new ItemFactory();
+            var wep = factory.CreateWeapon("cryptodagger");
+
         }
     }
-
 }
 
 

@@ -6,7 +6,21 @@ using System.Threading.Tasks;
 
 namespace RPG_Game
 {
-    internal class Ranger : Hero
+    public class Ranger : Hero
     {
+        public Ranger(string name)
+        {
+            Name = name;
+            Level = 1;
+            PrimaryAttribute = new PrimaryAttribute(1, 7, 1);
+        }
+
+        public override void LevelUp()
+        {
+            PrimaryAttribute.Strength += 1;
+            PrimaryAttribute.Dexterity += 5;
+            PrimaryAttribute.Intelligence += 1;
+            Level++;
+        }
     }
 }

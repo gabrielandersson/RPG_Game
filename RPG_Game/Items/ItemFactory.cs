@@ -10,10 +10,9 @@ namespace RPG_Game
     {
         internal static List<Item> StandardItems { get; }
 
-        static ItemFactory()
+        public ItemFactory()
         {
-            StandardItems = new List<Item>();
-
+            
             //Weapons
             StandardItems.Add(new Weapon("Sword of UwU", 3, WeaponCat.Swords, 4, 10));
             StandardItems.Add(new Weapon("Axe of Gimli", 5, WeaponCat.Swords, 6, 3));
