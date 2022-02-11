@@ -8,11 +8,11 @@ namespace RPG_Game
 {
     public class Mage : Hero
     {
-        public Mage(string name)
+        public Mage(string name) : base(name)
         {
             Name = name;
-            Level = 1;
             PrimaryAttribute = new PrimaryAttribute(1, 1, 8);
+            TotalAttribute = PrimaryAttribute.Strength + PrimaryAttribute.Dexterity + PrimaryAttribute.Intelligence;
         }
 
         public override void LevelUp()

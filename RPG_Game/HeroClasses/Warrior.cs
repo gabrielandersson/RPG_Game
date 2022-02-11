@@ -8,13 +8,10 @@ namespace RPG_Game
 {
     public class Warrior : Hero
     {
-        public Warrior(string name)
+        public Warrior(string name) : base(name)
         {
-            Name = name;
-            Level = 1;
             PrimaryAttribute = new PrimaryAttribute(5, 2, 1);
             TotalAttribute = PrimaryAttribute.Strength + PrimaryAttribute.Dexterity + PrimaryAttribute.Intelligence;
-            Damage = 1;
         }
 
         public override void LevelUp()

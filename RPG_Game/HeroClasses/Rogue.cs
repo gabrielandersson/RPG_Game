@@ -8,11 +8,10 @@ namespace RPG_Game
 {
     internal class Rogue : Hero
     {
-        public Rogue(string name)
+        public Rogue(string name) : base(name)
         {
-            Name = name;
-            Level = 1;
             PrimaryAttribute = new PrimaryAttribute(2, 6, 1);
+            TotalAttribute = PrimaryAttribute.Strength + PrimaryAttribute.Dexterity + PrimaryAttribute.Intelligence;
         }
 
         public override void LevelUp()

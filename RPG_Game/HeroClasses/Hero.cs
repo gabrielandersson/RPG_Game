@@ -13,10 +13,16 @@ namespace RPG_Game
         public int Damage { get; set; }
         public PrimaryAttribute PrimaryAttribute { get; set; }
         public int TotalAttribute { get; set; }
-
         public Dictionary<Slot, Item> EquippedItems { get; set; }
         public List<Item> Inventory { get; set; }
 
+        public Hero(string name)
+        {
+            Name = name;
+            EquippedItems = new Dictionary<Slot, Item>();
+            Damage = 1;
+            Level = 1;
+        }
         public abstract void LevelUp();
 
     }

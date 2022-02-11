@@ -13,7 +13,6 @@ namespace RPG_Game
         public int DamagePerSecond { get; set; }
         public WeaponCat Category { get; set; }
 
-        public Slot slot = Slot.Weapon;
 
         public Weapon(string name, int requiredLevel, WeaponCat category, int baseDmg, int attacksPSec)
              : base(name, requiredLevel)
@@ -22,6 +21,7 @@ namespace RPG_Game
             BaseDamage = baseDmg;
             AttacksPerSecond = attacksPSec;
             DamagePerSecond = BaseDamage * AttacksPerSecond;
+            Slot = Slot.Weapon;
         }
 
         public override Weapon Duplicate()

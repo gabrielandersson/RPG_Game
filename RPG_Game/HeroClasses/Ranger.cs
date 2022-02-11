@@ -8,11 +8,10 @@ namespace RPG_Game
 {
     public class Ranger : Hero
     {
-        public Ranger(string name)
+        public Ranger(string name) : base(name)
         {
-            Name = name;
-            Level = 1;
             PrimaryAttribute = new PrimaryAttribute(1, 7, 1);
+            TotalAttribute = PrimaryAttribute.Strength + PrimaryAttribute.Dexterity + PrimaryAttribute.Intelligence;
         }
 
         public override void LevelUp()
