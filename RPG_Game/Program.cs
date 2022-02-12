@@ -16,13 +16,6 @@ namespace RPG_Game
             HeroFactory heroFactory = new HeroFactory();
             var adam = heroFactory.CreateHero("Rogue", "adam");
 
-            adam.AddItemToInventory(armor);
-            adam.AddItemToInventory(weapon);
-
-            foreach (var item in adam.GetInventory())
-            {
-                Console.WriteLine(item.Name);
-            }
         }
     }
 }

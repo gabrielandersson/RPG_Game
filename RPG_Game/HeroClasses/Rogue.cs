@@ -9,7 +9,7 @@ namespace RPG_Game
     internal class Rogue : Hero
     {
 
-      private Dictionary<Slot, Item> EquippedItems = new Dictionary<Slot, Item>();
+        private Dictionary<Slot, Item> EquippedItems = new Dictionary<Slot, Item>();
         public Rogue(string name) : base(name)
         {
             EquippedItems = new Dictionary<Slot, Item>();
@@ -18,9 +18,8 @@ namespace RPG_Game
             HeroClass = HeroClass.Rogue;
         }
 
-        public void EquipItem()
+        public void EquipItem(string itemName)
         {
-            
         }
         public override void LevelUp()
         {

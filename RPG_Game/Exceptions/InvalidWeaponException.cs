@@ -8,6 +8,6 @@ namespace RPG_Game.Exceptions
 {
     internal class InvalidWeaponException : Exception
     {
-        public override string Message => base.Message;
+        
     }
 }
