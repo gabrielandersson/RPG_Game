@@ -11,6 +11,7 @@ namespace RPG_Game
         private Dictionary<Slot, Item> EquippedItems = new Dictionary<Slot, Item>();
         public Mage(string name) : base(name)
         {
+            Damage = 1 * (1 + (8 / 100));
             EquippedItems = new Dictionary<Slot, Item>();
             PrimaryAttribute = new PrimaryAttribute(1, 1, 8);
             TotalAttribute = PrimaryAttribute.Strength + PrimaryAttribute.Dexterity + PrimaryAttribute.Intelligence;

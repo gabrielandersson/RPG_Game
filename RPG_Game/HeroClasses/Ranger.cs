@@ -12,7 +12,7 @@ namespace RPG_Game
 
         public Ranger(string name) : base(name)
         {
-            
+             Damage = 1 * (1 + (7 / 100));
             EquippedItems = new Dictionary<Slot, Item>();
             PrimaryAttribute = new PrimaryAttribute(1, 7, 1);
             TotalAttribute = PrimaryAttribute.Strength + PrimaryAttribute.Dexterity + PrimaryAttribute.Intelligence;

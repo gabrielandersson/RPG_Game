@@ -12,7 +12,7 @@ namespace RPG_Game
 
         public Warrior(string name) : base(name)
         {
-
+            Damage = 1 * (1 + (5 / 100));
             EquippedItems = new Dictionary<Slot, Item>();
             PrimaryAttribute = new PrimaryAttribute(5, 2, 1);
             TotalAttribute = PrimaryAttribute.Strength + PrimaryAttribute.Dexterity + PrimaryAttribute.Intelligence;

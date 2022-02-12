@@ -18,7 +18,6 @@ namespace RPG_Game
         public Hero(string name)
         {
             Name = name;
-            Damage = 1;
             Level = 1;
             Inventory = new Inventory();
         }
