@@ -9,24 +9,20 @@ namespace RPG_Game
     {
         static void Main(string[] args)
         {
-            Warrior gabriel = new Warrior("Gabriel");
+            ItemFactory itemFactory = new ItemFactory();
+            var weapon = itemFactory.CreateWeapon("legolas bow");
+            var armor = itemFactory.CreateArmor("chainmail of gimli");
 
-            Console.WriteLine($" warrior name: {gabriel.Name}");
-            Console.WriteLine($" warrior level: {gabriel.Level}");
-            Console.WriteLine($" warrior strength: {gabriel.PrimaryAttribute.Strength}");
-            Console.WriteLine($" warrior dexterity: {gabriel.PrimaryAttribute.Dexterity}");
-            Console.WriteLine($" warrior intelligence: {gabriel.PrimaryAttribute.Intelligence}");
-            Console.WriteLine($"warrior dmg: {gabriel.Damage}"); 
+            HeroFactory heroFactory = new HeroFactory();
+            var adam = heroFactory.CreateHero("Rogue", "adam");
 
-            ItemFactory factory = new ItemFactory();
-            var wep = factory.CreateWeapon("cryptodagger");
-            var armor = factory.CreateArmor("potato sack");
-            var wep2 = factory.CreateWeapon("nerfsword");
-            
-            gabriel.EquippedItems.Add(wep.Slot, wep);
-            //gabriel.EquippedItems.Add(wep2.Slot, wep2);
+            adam.AddItemToInventory(armor);
+            adam.AddItemToInventory(weapon);
 
-
+            foreach (var item in adam.GetInventory())
+            {
+                Console.WriteLine(item.Name);
+            }
         }
     }
 }

@@ -8,22 +8,44 @@ namespace RPG_Game
 {
     public abstract class Hero
     {
-        public string Name { get; set; }
-        public int Level { get; set; }
-        public int Damage { get; set; }
-        public PrimaryAttribute PrimaryAttribute { get; set; }
-        public int TotalAttribute { get; set; }
-        public Dictionary<Slot, Item> EquippedItems { get; set; }
-        public List<Item> Inventory { get; set; }
+        protected readonly string Name;
+        protected int Level { get; set; }
+        protected int Damage { get; set; }
+        protected int TotalAttribute { get; set; }
+        protected PrimaryAttribute PrimaryAttribute { get; set; }
+        protected HeroClass HeroClass { get; set; }
+        private List<Item> Inventory { get; set; }
 
         public Hero(string name)
         {
             Name = name;
-            EquippedItems = new Dictionary<Slot, Item>();
+            Inventory = new List<Item>();
             Damage = 1;
             Level = 1;
         }
         public abstract void LevelUp();
+        public void AddItemToInventory(Item item) => Inventory.Add(item);
+        public void DeleteItemFromInventory(string itemName) => Inventory.Remove(Inventory.Find(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase)));
+        public List<Item> GetInventory() => Inventory;
+        public Item GetItemFromInventory(string itemName) => Inventory.Find(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase));
+        public void DisplayInventory()
+        {
+            Inventory.ForEach(item =>
+            {
+                if (item is Weapon weapon) Console.WriteLine($"\nName: {weapon.Name}\nRequired level: {weapon.RequiredLevel}" +
+                $"\nCategory: {weapon.Category}\nBase dmg: {weapon.BaseDamage}\nAps: {weapon.AttacksPerSecond}" +
+                $"\nDmg: {weapon.Damage}");
 
+                if(item is Armor armor) Console.WriteLine($"\nName: {armor.Name}\nRequired level: {armor.RequiredLevel}" +
+              $"\nCategory: {armor.Category}\nSlot:{armor.Slot}\nStrength: {armor.PrimaryAttributes.Strength} " +
+              $"\nDexterity:{armor.PrimaryAttributes.Dexterity}\nIntelligence:{armor.PrimaryAttributes.Intelligence}");
+
+            });
+        }
+         
     }
 }
+
+
+
+

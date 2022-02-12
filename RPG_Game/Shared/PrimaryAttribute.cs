@@ -11,7 +11,10 @@ namespace RPG_Game
         public int Strength { get; set; }
         public int Dexterity { get; set; }
         public int Intelligence { get; set; }
+        public PrimaryAttribute()
+        {
 
+        }
         public PrimaryAttribute(int strength, int dexterity, int intelligence)
         {
             Strength = strength;

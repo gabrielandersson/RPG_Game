@@ -10,7 +10,8 @@ namespace RPG_Game
     {
         public int BaseDamage { get; set; }
         public int AttacksPerSecond { get; set; }
-        public int DamagePerSecond { get; set; }
+        public int DamagePerSecond { get; set;}
+        public double Damage { get; set; }
         public WeaponCat Category { get; set; }
 
 

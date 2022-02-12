@@ -8,10 +8,15 @@ namespace RPG_Game
 {
     public class Warrior : Hero
     {
+        private Dictionary<Slot, Item> EquippedItems = new Dictionary<Slot, Item>();
+
         public Warrior(string name) : base(name)
         {
+
+            EquippedItems = new Dictionary<Slot, Item>();
             PrimaryAttribute = new PrimaryAttribute(5, 2, 1);
             TotalAttribute = PrimaryAttribute.Strength + PrimaryAttribute.Dexterity + PrimaryAttribute.Intelligence;
+            HeroClass = HeroClass.Warrior;
         }
 
         public override void LevelUp()
@@ -21,5 +26,6 @@ namespace RPG_Game
             PrimaryAttribute.Intelligence += 1;
             Level++;
         }
+
     }
 }

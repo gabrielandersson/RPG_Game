@@ -8,11 +8,13 @@ namespace RPG_Game
 {
     public class Mage : Hero
     {
+        private Dictionary<Slot, Item> EquippedItems = new Dictionary<Slot, Item>();
         public Mage(string name) : base(name)
         {
-            Name = name;
+            EquippedItems = new Dictionary<Slot, Item>();
             PrimaryAttribute = new PrimaryAttribute(1, 1, 8);
             TotalAttribute = PrimaryAttribute.Strength + PrimaryAttribute.Dexterity + PrimaryAttribute.Intelligence;
+            HeroClass = HeroClass.Mage;
         }
 
         public override void LevelUp()
