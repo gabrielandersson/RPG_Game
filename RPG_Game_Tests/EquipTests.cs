@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using RPG_Game;
 using Xunit;
 namespace RPG_Game_Tests
@@ -110,6 +111,57 @@ namespace RPG_Game_Tests
         }
         #endregion
 
-     
+        #region ChangeEquippedWeaponReturnsOldToInventory
+        [Fact]
+        public void EquipItem_newWarriorOneEquippedWeaponChangeToAnotherFromInventory_ShouldSwitchPlaces()
+        {
+            var newWarrior = new Warrior("gabriel");
+            var newWeapon = new Weapon("NerfSword", 1, WeaponCat.Swords, 0, 0);
+            var newWeapon2 = new Weapon("Axe of Gimli", 1, WeaponCat.Swords, 6, 3);
+
+            newWarrior.Inventory.AddItemToInventory(newWeapon);
+            newWarrior.Inventory.AddItemToInventory(newWeapon2);
+
+            newWarrior.EquipItem(newWeapon.Name);
+            var expected = "Axe of Gimli";
+            // Act
+            newWarrior.EquipItem(newWeapon2.Name);
+            var actual = newWarrior.EquippedItems[Slot.Weapon].Name;
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+        #endregion
+
+
+        [Fact]
+        public void EquipItem_newWarriorOneEquippedArmorChangeSameSlotToAnotherFromInventory_ShouldBeRightTotal()
+        {
+            var newWarrior = new Warrior("gabriel");
+            var armorOne = new Armor("Chestplate of UwU", 1, Slot.Body, ArmorCat.Plate,
+                 new PrimaryAttribute(5, 2, 2));
+            var armorTwo = new Armor("Chainmail Of Gimli", 1, Slot.Body, ArmorCat.Mail,
+                new PrimaryAttribute(7, 1, 5));
+
+            newWarrior.Inventory.AddItemToInventory(armorOne);
+            newWarrior.Inventory.AddItemToInventory(armorTwo);
+
+            newWarrior.EquipItem(armorOne.Name);
+            TotalAttribute expected = new TotalAttribute();
+            expected.Strength = 12.0;
+            expected.Dexterity = 3.0;
+            expected.Intelligence = 6.0;          // base: str:5, dex:2 , int: 1  //after: 9, 5, 4 // 
+            
+            // Act
+            newWarrior.EquipItem(armorTwo.Name);
+            TotalAttribute actual = newWarrior.TotalAttribute;
+            var expectedStr = JsonConvert.SerializeObject(expected);
+            var actualStr = JsonConvert.SerializeObject(actual);
+
+            // Assert
+            Assert.Equal(expectedStr, actualStr);
+        }
+
+
     }
 }

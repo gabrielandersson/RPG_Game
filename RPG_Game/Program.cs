@@ -10,22 +10,25 @@ namespace RPG_Game
         static void Main(string[] args)
         {
             var newWarrior = new Warrior("gabriel");
-            var newWeapon = new Weapon("NerfSword", 1, WeaponCat.Swords, 1, 2);
-            var newArmor = new Armor("Sweaty Chainmail Pants", 1, Slot.Legs, ArmorCat.Mail,
+            var armorOne = new Armor("Chestplate of UwU", 1, Slot.Body, ArmorCat.Plate,
+                new PrimaryAttribute(5, 2, 2));
+            var armorTwo = new Armor("Sweaty Chainmail Pants", 1, Slot.Legs, ArmorCat.Mail,
                 new PrimaryAttribute(4, 3, 3));
 
-            newWarrior.Inventory.AddItemToInventory(newWeapon);
-            newWarrior.Inventory.AddItemToInventory(newArmor);
-            newWarrior.EquipItem(newWeapon.Name);
-            newWarrior.EquipItem(newArmor.Name);
-            double expected = 2.0 * (1 + (9 / 100)); // Strength Should be 9. Weapon Dps = 2. Calc= 2*(1+(9/100)) = 2.18 
-            // Act
-            double actual = newWarrior.Damage;
-            // Assert
-                      // Assert
-            Console.WriteLine($"Expected: {expected}");
+            newWarrior.Inventory.AddItemToInventory(armorOne);
+            newWarrior.Inventory.AddItemToInventory(armorTwo);
 
-            Console.WriteLine($"Actual: {actual}");
+            newWarrior.EquipItem(armorOne.Name);
+            TotalAttribute expected = new TotalAttribute();
+            expected.Strength = 9.0;
+            expected.Dexterity = 5.0;
+            expected.Intelligence = 4.0;          // base: str:5, dex:2 , int: 1  //after: 9, 5, 4
+
+            newWarrior.EquipItem(armorTwo.Name);
+            TotalAttribute actual = newWarrior.TotalAttribute;
+            Console.WriteLine($"Expected: {expected.Strength} {expected.Dexterity} {expected.Intelligence}");
+
+            Console.WriteLine($"Actual: {actual.Strength} {actual.Dexterity} {actual.Intelligence}");
         }
     }
 }
