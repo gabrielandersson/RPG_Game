@@ -110,12 +110,22 @@ namespace RPG_Game
                     TotalAttribute.Strength = 0;
                     TotalAttribute.Dexterity = 0;
                     TotalAttribute.Intelligence = 0;
+                    int counter = 0;
                     foreach (KeyValuePair<Slot, Item> entry in EquippedItems)
                     {
-
-                        TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength + PrimaryAttribute.Strength;
-                        TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity + PrimaryAttribute.Dexterity;
-                        TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence + PrimaryAttribute.Intelligence;
+                        if (counter == 0)
+                        {
+                            TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength + PrimaryAttribute.Strength;
+                            TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity + PrimaryAttribute.Dexterity;
+                            TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence + PrimaryAttribute.Intelligence;
+                            counter++;
+                        }
+                        else
+                        {
+                            TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength;
+                            TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity;
+                            TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence;
+                        }
                     }
                     Damage = 1.0 * (1.0 + ((TotalAttribute.Strength / 100.0)));
                 }
@@ -124,15 +134,25 @@ namespace RPG_Game
                     TotalAttribute.Strength = 0;
                     TotalAttribute.Dexterity = 0;
                     TotalAttribute.Intelligence = 0;
+                    int counter = 0;
                     foreach (KeyValuePair<Slot, Item> entry in EquippedItems)
                     {
-
-                        TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength + PrimaryAttribute.Strength;
-                        TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity + PrimaryAttribute.Dexterity;
-                        TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence + PrimaryAttribute.Intelligence;
+                        if (counter == 0)
+                        {
+                            TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength + PrimaryAttribute.Strength;
+                            TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity + PrimaryAttribute.Dexterity;
+                            TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence + PrimaryAttribute.Intelligence;
+                            counter++;
+                        }
+                        else
+                        {
+                            TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength;
+                            TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity;
+                            TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence;
+                        }
                     }
                     var weapon = EquippedItems[Slot.Weapon] as Weapon;
-                    Damage = weapon.DamagePerSecond * (1.0 + (TotalAttribute.Strength / 100.0));
+                    Damage = weapon.DamagePerSecond * (1 + (TotalAttribute.Strength / 100.0));
                 }
                 else if (item is Weapon)
                 {

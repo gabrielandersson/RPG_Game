@@ -25,8 +25,9 @@ namespace RPG_Game
         {
             try
             {
+                if (itemName == null) throw new ArgumentNullException();
                 var requestedItem = Inventory.GetItemFromInventory(itemName);
-                if(requestedItem == null)  return "No item with that name was found in the inventory!";
+                if (requestedItem == null) return "No item with that name was found in the inventory!";
                 if (requestedItem is Armor)
                 {
                     if (requestedItem.RequiredLevel > Level) throw new InvalidArmorException("Too low lvl for this armor");
@@ -39,14 +40,14 @@ namespace RPG_Game
                             EquippedItems[requestedItem.Slot] = requestedItem;
                             Inventory.DeleteItemFromInventory(requestedItem.Name);
                             UpdateStats(requestedItem);
-                            return "New armour equipped";
+                            return "New armour equipped!";
                         }
                         else
                         {
                             EquippedItems.Add(requestedItem.Slot, requestedItem);
                             Inventory.DeleteItemFromInventory(requestedItem.Name);
                             UpdateStats(requestedItem);
-                            return "New armour equipped";
+                            return "New armour equipped!";
                         }
                     }
                     else
@@ -84,30 +85,23 @@ namespace RPG_Game
             }
             catch (InvalidArmorException ex)
             {
-                Console.WriteLine($"Exceptional custom exception: {ex.Message}");
+                return ex.Message;
             }
             catch (InvalidWeaponException ex)
             {
+                return ex.Message;
+            }
+            catch (ArgumentNullException ex)
+            {
                 Console.WriteLine($"Exceptional custom exception: {ex.Message}");
             }
-            catch (NullReferenceException ex)
-            {
-                Console.WriteLine($"{ex.Message}");
-            }
-            return "Something went wrong! The requested item existed but was not of type Armor or type Weapon!";
+            return "Something went wrong! We're sorry!";
         }
 
 
 
         public void UpdateStats(Item item)
         {
-            //cleara totalattributes och iterera sen igenom allt för att säkerställa att totalattributes blir rätt? 
-            // om man tar bort ett item då? ta bort itemet först och cleara sen total attributes och gå sen igenom allt?
-            // om vapnet som matas in från EquipItem är ett vapen då? det kan ju vara så att inget vapen finns sen tidigare
-            // - meeen - det har isf redan blivit tillagt uppifrån i EquippedItems så det jag behöver bry mig om är om jag 
-            // lägger till armor parts utan att ett vapen finns där.
-            // om det är ett vapen som kommer in då? Det kommer iaf finnas med i listan isf - skiljer algoritmen sig om det är 
-            // ett nytt vapen eller en förändring av vapen? 
             try
             {
                 if ((!EquippedItems.ContainsKey(Slot.Weapon)) && item is Armor)
@@ -115,33 +109,53 @@ namespace RPG_Game
                     TotalAttribute.Strength = 0;
                     TotalAttribute.Dexterity = 0;
                     TotalAttribute.Intelligence = 0;
+                    int counter = 0;
                     foreach (KeyValuePair<Slot, Item> entry in EquippedItems)
                     {
-
-                        TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength + PrimaryAttribute.Strength;
-                        TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity + PrimaryAttribute.Dexterity;
-                        TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence + PrimaryAttribute.Intelligence;
+                        if (counter == 0)
+                        {
+                            TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength + PrimaryAttribute.Strength;
+                            TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity + PrimaryAttribute.Dexterity;
+                            TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence + PrimaryAttribute.Intelligence;
+                            counter++;
+                        }
+                        else
+                        {
+                            TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength;
+                            TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity;
+                            TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence;
+                        }
                     }
-                    Damage = 1 * (1 + ((TotalAttribute.Intelligence / 100)));
+                    Damage = 1.0 * (1.0 + ((TotalAttribute.Strength / 100.0)));
                 }
                 else if ((EquippedItems.ContainsKey(Slot.Weapon)) && item is Armor)
                 {
                     TotalAttribute.Strength = 0;
                     TotalAttribute.Dexterity = 0;
                     TotalAttribute.Intelligence = 0;
+                    int counter = 0;
                     foreach (KeyValuePair<Slot, Item> entry in EquippedItems)
                     {
-
-                        TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength + PrimaryAttribute.Strength;
-                        TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity + PrimaryAttribute.Dexterity;
-                        TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence + PrimaryAttribute.Intelligence;
+                        if (counter == 0)
+                        {
+                            TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength + PrimaryAttribute.Strength;
+                            TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity + PrimaryAttribute.Dexterity;
+                            TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence + PrimaryAttribute.Intelligence;
+                            counter++;
+                        }
+                        else
+                        {
+                            TotalAttribute.Strength += (entry.Value as Armor).PrimaryAttribute.Strength;
+                            TotalAttribute.Dexterity += (entry.Value as Armor).PrimaryAttribute.Dexterity;
+                            TotalAttribute.Intelligence += (entry.Value as Armor).PrimaryAttribute.Intelligence;
+                        }
                     }
-                    var weapon = (EquippedItems[Slot.Weapon] as Weapon);
-                    Damage = weapon.DamagePerSecond * (1 + ((TotalAttribute.Intelligence / 100)));
+                    var weapon = EquippedItems[Slot.Weapon] as Weapon;
+                    Damage = weapon.DamagePerSecond * (1 + (TotalAttribute.Strength / 100.0));
                 }
                 else if (item is Weapon)
                 {
-                    Damage = (item as Weapon).DamagePerSecond * ((1 + (TotalAttribute.Intelligence / 100)));
+                    Damage = (item as Weapon).DamagePerSecond * (1 + (TotalAttribute.Strength / 100));
                 }
             }
             catch (NullReferenceException ex)

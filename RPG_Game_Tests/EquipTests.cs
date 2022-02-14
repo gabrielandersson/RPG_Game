@@ -133,9 +133,9 @@ namespace RPG_Game_Tests
         }
         #endregion
 
-
+        #region EquipNewArmor/ChangeSameArmorSlot
         [Fact]
-        public void EquipItem_newWarriorOneEquippedArmorChangeSameSlotToAnotherFromInventory_ShouldBeRightTotal()
+        public void EquipItem_NewWarriorOneEquippedArmorChangeSameSlotToAnotherFromInventory_ShouldBeRightTotal()
         {
             var newWarrior = new Warrior("gabriel");
             var armorOne = new Armor("Chestplate of UwU", 1, Slot.Body, ArmorCat.Plate,
@@ -151,7 +151,7 @@ namespace RPG_Game_Tests
             expected.Strength = 12.0;
             expected.Dexterity = 3.0;
             expected.Intelligence = 6.0;          // base: str:5, dex:2 , int: 1  //after: 9, 5, 4 // 
-            
+
             // Act
             newWarrior.EquipItem(armorTwo.Name);
             TotalAttribute actual = newWarrior.TotalAttribute;
@@ -161,7 +161,36 @@ namespace RPG_Game_Tests
             // Assert
             Assert.Equal(expectedStr, actualStr);
         }
+        #endregion
 
+        #region EquipTwoDifferentTypesOfArmor
+        [Fact]
+        public void EquipItem_NewWarriorOneEquippedArmorAddAnotherArmor_ShouldBeRightTotal()
+        {
+            var newWarrior = new Warrior("gabriel");
+            var armorOne = new Armor("Chestplate of UwU", 1, Slot.Body, ArmorCat.Plate,
+                new PrimaryAttribute(5, 2, 2));
+            var armorTwo = new Armor("Chainmail Helmet", 1, Slot.Head, ArmorCat.Mail,
+                 new PrimaryAttribute(2, 2, 4));
 
+            newWarrior.Inventory.AddItemToInventory(armorOne);
+            newWarrior.Inventory.AddItemToInventory(armorTwo);
+
+            newWarrior.EquipItem(armorOne.Name);
+            TotalAttribute expected = new TotalAttribute();
+            expected.Strength = 12.0;
+            expected.Dexterity = 6.0;
+            expected.Intelligence = 7.0;          // base:5 str:5, dex:2 , int: 1  //after: 12, 6, 7  // 
+
+            // Act
+            newWarrior.EquipItem(armorTwo.Name);
+            TotalAttribute actual = newWarrior.TotalAttribute;
+            var expectedStr = JsonConvert.SerializeObject(expected);
+            var actualStr = JsonConvert.SerializeObject(actual);
+
+            // Assert
+            Assert.Equal(expectedStr, actualStr);
+        }
+        #endregion
     }
 }
