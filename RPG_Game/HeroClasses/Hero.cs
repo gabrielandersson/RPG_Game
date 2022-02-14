@@ -8,11 +8,12 @@ namespace RPG_Game
 {
     public abstract class Hero
     {
-        protected readonly string Name;
-        protected int Level { get; set; }
-        protected int Damage { get; set; }
-        protected int TotalAttribute { get; set; }
-        protected PrimaryAttribute PrimaryAttribute { get; set; }
+        public readonly string Name;
+        public int Level { get; set; }
+        public double Damage { get; set; }
+        public Dictionary<Slot, Item> EquippedItems = new Dictionary<Slot, Item>();
+        public TotalAttribute TotalAttribute { get; set; }
+        public PrimaryAttribute PrimaryAttribute { get; set; }
         protected HeroClass HeroClass { get; set; }
         public Inventory Inventory { get; set; }
         public Hero(string name)
@@ -23,6 +24,12 @@ namespace RPG_Game
         }
 
          public abstract void LevelUp();
+        
+        public virtual string ShowHeroStats()
+        {
+            Console.WriteLine($"\nName: {Name}\nLevel: {Level}\nStrength: {TotalAttribute.Strength}\nDexterity: {TotalAttribute.Dexterity}\nIntelligence: {TotalAttribute.Intelligence}\nDamage: {Damage}");
+            return $"\nName: {Name}\nLevel: {Level}\nStrength: {TotalAttribute.Strength}\nDexterity: {TotalAttribute.Dexterity}\nIntelligence: {TotalAttribute.Intelligence}\nDamage: {Damage}";
+        }
     }
 }
 

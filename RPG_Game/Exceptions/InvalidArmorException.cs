@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RPG_Game.Exceptions
+namespace RPG_Game
 {
-    internal class InvalidArmorException
+    public class InvalidArmorException : Exception
     {
+        public InvalidArmorException(string message) : base(message)
+        {
+        }
+        public InvalidArmorException()
+        {}
     }
 }

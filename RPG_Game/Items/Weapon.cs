@@ -8,14 +8,13 @@ namespace RPG_Game
 {
     public class Weapon : Item
     {
-        public int BaseDamage { get; set; }
-        public int AttacksPerSecond { get; set; }
-        public int DamagePerSecond { get; set;}
-        public double Damage { get; set; }
+        public double BaseDamage { get; set; }
+        public double AttacksPerSecond { get; set; }
+        public double DamagePerSecond { get; set; }
         public WeaponCat Category { get; set; }
 
 
-        public Weapon(string name, int requiredLevel, WeaponCat category, int baseDmg, int attacksPSec)
+        public Weapon(string name, int requiredLevel, WeaponCat category, double baseDmg, double attacksPSec)
              : base(name, requiredLevel)
         {
             Category = category;

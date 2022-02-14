@@ -8,7 +8,6 @@ namespace RPG_Game
 {
     public class ItemFactory
     {
-        public ItemFactory(){}
         internal static List<Item> StandardItems { get; } = new List<Item>
         {
               new Weapon("Sword of UwU", 3, WeaponCat.Swords, 4, 10),
@@ -26,7 +25,7 @@ namespace RPG_Game
                                                new PrimaryAttribute(4, 1, 1)),
               new Armor("Cool Helmet Of UwU", 4, Slot.Head, ArmorCat.Plate,
                                                new PrimaryAttribute(2, 1, 5)),
-              new Armor("Potato Sack", 1, Slot.Body, 0,
+              new Armor("Potato Sack", 1, Slot.Body, ArmorCat.Cloth,
                                                new PrimaryAttribute(1, 1, 1)),
               new Armor("Chainmail Of Gimli", 5, Slot.Body, ArmorCat.Mail,
                                                new PrimaryAttribute(7, 1, 5)),
@@ -45,7 +44,7 @@ namespace RPG_Game
                                                new PrimaryAttribute(1, 2, 3))
         };
 
-        public Armor CreateArmor(string itemName)
+        public Item CreateArmor(string itemName)
         {
             Armor armor = (Armor)StandardItems.FirstOrDefault(weapon => string.Equals(weapon.Name, itemName, StringComparison.OrdinalIgnoreCase));
 

@@ -9,19 +9,19 @@ namespace RPG_Game
     public class Armor : Item
     {
         public ArmorCat Category { get; set; }
-        public PrimaryAttribute PrimaryAttributes;
+        public PrimaryAttribute PrimaryAttribute;
         public Armor(string name, int requiredLevel, Slot slot, ArmorCat category, PrimaryAttribute attribute)
                      : base(name, requiredLevel, slot)
         {
             Category = category;
-            PrimaryAttributes = attribute;
+            PrimaryAttribute = attribute;
             Slot = slot;
 
         }
 
         public override Armor Duplicate()
         {
-            return new Armor(Name,RequiredLevel, Slot, Category, PrimaryAttributes);
+            return new Armor(Name,RequiredLevel, Slot, Category, PrimaryAttribute);
         }
 
     }

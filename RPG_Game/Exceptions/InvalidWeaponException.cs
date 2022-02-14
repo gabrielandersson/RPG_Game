@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RPG_Game.Exceptions
+namespace RPG_Game
 {
-    internal class InvalidWeaponException : Exception
+    public class InvalidWeaponException : Exception
     {
-        
+        public InvalidWeaponException(string message) : base(message)
+        {
+        }
+        public InvalidWeaponException()
+        { }
     }
 }

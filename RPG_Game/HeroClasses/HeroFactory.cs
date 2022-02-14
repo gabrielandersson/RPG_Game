@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Game
 {
-    public class HeroFactory
+    public class HeroFactory   
     {
 
         public Hero CreateHero(string heroClass, string name)

@@ -6,20 +6,14 @@ using System.Threading.Tasks;
 
 namespace RPG_Game
 {
-    public class PrimaryAttribute
+    public class TotalAttribute
     {
         public double Strength { get; set; }
         public double Dexterity { get; set; }
         public double Intelligence { get; set; }
-        public PrimaryAttribute()
+        public TotalAttribute()
         {
 
-        }
-        public PrimaryAttribute(int strength, int dexterity, int intelligence)
-        {
-            Strength = strength;
-            Dexterity = dexterity;
-            Intelligence = intelligence;
         }
     }
 }
