@@ -2,6 +2,9 @@
 
 namespace RPG_Game.Items
 {
+    /// <summary>
+    /// Item is the base class for Weapon and Armor
+    /// </summary>
     public abstract class Item
     {
         public string Name { get; set; }

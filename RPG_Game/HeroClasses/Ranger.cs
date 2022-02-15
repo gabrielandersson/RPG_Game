@@ -7,7 +7,6 @@ namespace RPG_Game.HeroClasses
 {
     public class Ranger : Hero
     {
-
         public Ranger(string name) : base(name)
         {
             EquippedItems = new Dictionary<Slot, Item>();
@@ -21,7 +20,10 @@ namespace RPG_Game.HeroClasses
             Damage = 1.0 * (1.0 + (TotalAttribute.Dexterity / 100.0));
         }
 
-
+        /// <summary>
+        /// The method responsible for upping the specific stats of this hero type
+        /// some nice null checks there too.
+        /// </summary>
         public virtual void LevelUp()
         {
             if (PrimaryAttribute != null)

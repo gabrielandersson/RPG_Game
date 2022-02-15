@@ -20,8 +20,12 @@ namespace RPG_Game.HeroClasses
             };
             Damage = 1.0 * (1.0 + (TotalAttribute.Dexterity / 100.0));
         }
-       
-        public virtual void LevelUp()
+
+        /// <summary>
+        /// The method responsible for upping the specific stats of this hero type
+        /// some nice null checks there too.
+        /// </summary>
+        public void LevelUp()
         {
             if (PrimaryAttribute != null)
             {

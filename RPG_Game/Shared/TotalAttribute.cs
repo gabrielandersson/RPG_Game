@@ -1,6 +1,8 @@
-﻿
-namespace RPG_Game.Shared
+﻿namespace RPG_Game.Shared
 {
+    /// <summary>
+    /// Encapsulation meant for the total sum of respective hero attribute:w
+    /// </summary>
     public class TotalAttribute
     {
         public double Strength { get; set; }

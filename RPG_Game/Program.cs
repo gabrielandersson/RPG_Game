@@ -8,7 +8,7 @@ namespace RPG_Game
 {
     internal class Program
     {
-        //just some testdata for another class, main() looked lonely..
+        //just some test data for another class, main() looked lonely..
         static void Main(string[] args)
         {
           
@@ -22,9 +22,9 @@ namespace RPG_Game
             rogue.EquipHandler.EquipItem(newWeapon.Name, rogue);
             rogue.EquipHandler.EquipItem(newArmor.Name, rogue);
             double expected = 2.18;
-            // Act
+
             double actual = rogue.Damage;
-            // Assert
+
             Console.WriteLine($"exp: {expected}");
             Console.WriteLine($"act: {actual}");
             rogue.Inventory.DisplayInventory();

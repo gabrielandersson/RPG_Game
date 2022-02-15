@@ -9,7 +9,6 @@ namespace RPG_Game.HeroClasses
     {
         public Mage(string name) : base(name)
         {
-           
             EquippedItems = new Dictionary<Slot, Item>();
             PrimaryAttribute = new PrimaryAttribute(1, 1, 8);
             TotalAttribute = new TotalAttribute
@@ -20,7 +19,10 @@ namespace RPG_Game.HeroClasses
             };
             Damage = 1.0 * (1.0 + (TotalAttribute.Intelligence / 100.0));
         }
-
+        /// <summary>
+        /// The method responsible for upping the specific stats of this hero type
+        /// some nice null checks there too.
+        /// </summary>
         public virtual void LevelUp()
         {
             if (PrimaryAttribute != null)

@@ -1,6 +1,9 @@
-﻿
-namespace RPG_Game.Shared
+﻿namespace RPG_Game.Shared
 {
+    /// <summary>
+    /// Encapsulation of a hero's primary attributes gained from lvl up, default constructor omitted
+    /// since it didn't feel necessary for my purposes at this point in time.
+    /// </summary>
     public class PrimaryAttribute
     {
         public double Strength { get; set; }

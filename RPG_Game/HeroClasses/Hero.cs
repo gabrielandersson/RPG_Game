@@ -6,6 +6,11 @@ using RPG_Game.Shared;
 
 namespace RPG_Game.HeroClasses
 {
+    /// <summary>
+    /// Base class for all hero classes, made the choice to make the name unchangeable,
+    /// who knows - at some point maybe someone will pay for getting it changed - blizzard style?
+    /// Future endeavors might entail some kind of decoupling for the EquipHandler.
+    /// </summary>
     public abstract class Hero
     {
         public readonly string Name;
@@ -23,7 +28,11 @@ namespace RPG_Game.HeroClasses
             Inventory = new Inventory();
             EquipHandler = new EquipHandler();
         }
-
+        /// <summary>
+        /// Writes out a hero's stats to the standard output stream, only reason i made this virtual is if
+        /// some future hero might have new stats they want to display. 
+        /// </summary>
+        /// <returns></returns>
         public virtual string ShowHeroStats()
         {
             Console.WriteLine($"\nName: {Name}\nLevel: {Level}\nStrength: {TotalAttribute.Strength}\nDexterity: {TotalAttribute.Dexterity}\nIntelligence: {TotalAttribute.Intelligence}\nDamage: {Damage}");

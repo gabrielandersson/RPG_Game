@@ -5,7 +5,7 @@ using RPG_Game.Exceptions;
 using RPG_Game.HeroClasses;
 using RPG_Game.Items;
 
-namespace RPG_Game
+namespace RPG_Game.Shared
 {
     public class EquipHandler
     {
@@ -91,7 +91,6 @@ namespace RPG_Game
             {
                 return ex.Message;
             }
-
         }
         /// <summary>
         ///  This method checks if the item passed the specific requirements for the Ranger class.
@@ -206,7 +205,6 @@ namespace RPG_Game
         /// puts the previous slot occupier back into  the inventory. 
         /// Then it proceeds to call UpdateStats(). Needs some decoupling love.
         /// Can throw an ArgumentNullException and proceeds to return the message.
-        /// 
         /// </summary>
         /// <param name="itemName"></param>
         /// <param name="hero"></param>
@@ -231,7 +229,7 @@ namespace RPG_Game
                 if (validityCheck == "true")
                 {
                     var type = requestedItem is Armor ? "armour" : "weapon";
-                    if (hero.EquippedItems.ContainsKey(requestedItem.Slot))
+                    if (hero.EquippedItems != null && hero.EquippedItems.ContainsKey(requestedItem.Slot))
                     {
 
                         var backToInventory = hero.EquippedItems[requestedItem.Slot];
@@ -242,7 +240,7 @@ namespace RPG_Game
                         return $"New {type} equipped!";
                     }
 
-                    hero.EquippedItems.Add(requestedItem.Slot, requestedItem);
+                    if (hero.EquippedItems != null) hero.EquippedItems.Add(requestedItem.Slot, requestedItem);
                     hero.Inventory.DeleteItemFromInventory(requestedItem.Name);
                     UpdateStats(requestedItem, hero);
                     return $"New {type} equipped!";
@@ -271,6 +269,7 @@ namespace RPG_Game
         {
             try
             {
+                if (hero.TotalAttribute == null) return 0.0;
                 double totalPrimary = hero switch
                 {
                     Warrior => hero.TotalAttribute.Strength,
@@ -299,37 +298,45 @@ namespace RPG_Game
             try
             {
                 //If there is no weapon only armor
-                if ((!hero.EquippedItems.ContainsKey(Slot.Weapon)) && item is Armor)
+                if (hero.EquippedItems != null && (!hero.EquippedItems.ContainsKey(Slot.Weapon)) && item is Armor)
                 {
-                    hero.TotalAttribute.Strength = 0;
-                    hero.TotalAttribute.Dexterity = 0;
-                    hero.TotalAttribute.Intelligence = 0;
-                    var counter = 0;
-                    foreach (KeyValuePair<Slot, Item> entry in hero.EquippedItems)
+                    if (hero.TotalAttribute != null)
                     {
-                        if (entry.Key == Slot.Weapon) continue;
-                        //Only add hero's default primary first time
-                        if (counter == 0)
-                        {
-                            hero.TotalAttribute.Strength += ((Armor)entry.Value).PrimaryAttribute.Strength + hero.PrimaryAttribute.Strength;
-                            hero.TotalAttribute.Dexterity += ((Armor)entry.Value).PrimaryAttribute.Dexterity + hero.PrimaryAttribute.Dexterity;
-                            hero.TotalAttribute.Intelligence += ((Armor)entry.Value).PrimaryAttribute.Intelligence + hero.PrimaryAttribute.Intelligence;
-                            counter++;
-                        }
-                        //Afterwards only add the other armor piece attributes
-                        else
+                        hero.TotalAttribute.Strength = 0;
+                        hero.TotalAttribute.Dexterity = 0;
+                        hero.TotalAttribute.Intelligence = 0;
+                        var counter = 0;
+                        foreach (KeyValuePair<Slot, Item> entry in hero.EquippedItems)
                         {
                             if (entry.Key == Slot.Weapon) continue;
-                            hero.TotalAttribute.Strength += ((Armor)entry.Value).PrimaryAttribute.Strength;
-                            hero.TotalAttribute.Dexterity += ((Armor)entry.Value).PrimaryAttribute.Dexterity;
-                            hero.TotalAttribute.Intelligence += ((Armor)entry.Value).PrimaryAttribute.Intelligence;
+                            //Only add hero's default primary first time
+                            if (counter == 0)
+                            {
+                                hero.TotalAttribute.Strength += ((Armor) entry.Value).PrimaryAttribute.Strength +
+                                                                hero.PrimaryAttribute.Strength;
+                                hero.TotalAttribute.Dexterity += ((Armor) entry.Value).PrimaryAttribute.Dexterity +
+                                                                 hero.PrimaryAttribute.Dexterity;
+                                hero.TotalAttribute.Intelligence +=
+                                    ((Armor) entry.Value).PrimaryAttribute.Intelligence +
+                                    hero.PrimaryAttribute.Intelligence;
+                                counter++;
+                            }
+                            //Afterwards only add the other armor piece attributes
+                            else
+                            {
+                                if (entry.Key == Slot.Weapon) continue;
+                                hero.TotalAttribute.Strength += ((Armor) entry.Value).PrimaryAttribute.Strength;
+                                hero.TotalAttribute.Dexterity += ((Armor) entry.Value).PrimaryAttribute.Dexterity;
+                                hero.TotalAttribute.Intelligence += ((Armor) entry.Value).PrimaryAttribute.Intelligence;
+                            }
                         }
                     }
+
                     var totalPrimary = GetPrimaryValue(hero);
                     hero.Damage = 1.0 * (1.0 + (totalPrimary / 100.0));
                 }
                 //If weapon already exists and armor is added-> update stats and weapon calc /
-                else if ((hero.EquippedItems.ContainsKey(Slot.Weapon)) && item is Armor)
+                else if (hero.EquippedItems != null && (hero.EquippedItems.ContainsKey(Slot.Weapon)) && item is Armor)
                 {
                     hero.TotalAttribute.Strength = 0;
                     hero.TotalAttribute.Dexterity = 0;
