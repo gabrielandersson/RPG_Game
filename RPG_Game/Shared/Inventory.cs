@@ -1,51 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RPG_Game.Items;
 
-namespace RPG_Game
+namespace RPG_Game.Shared
 {
     public class Inventory
     {
-        private List<Item> InventoryList = new List<Item>();
+        private readonly List<Item> _inventoryList = new();
+        /// <summary>
+        /// Takes an Item and returns a bool if the item was added
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public bool AddItemToInventory(Item item)
         {
-            if (InventoryList.Count < 10)
+            if (_inventoryList.Count < 10)
             {
-                InventoryList.Add(item);
+                _inventoryList.Add(item);
                 return true;
             }
-            else
-            {
-                Console.WriteLine("Sorry your inventory is full!");
-                return false;
-            }
+            Console.WriteLine("Sorry your inventory is full!");
+            return false;
+        }
+
+        public int GetCount()
+        {
+            return _inventoryList.Count;
         }
 
         public void DeleteItemFromInventory(string itemName)
         {
-            InventoryList?.Remove(InventoryList.Find(x => x.Name == itemName));
+            _inventoryList.Remove(_inventoryList.Find(x => x.Name == itemName)
+                                  ?? throw new NullReferenceException("Item to delete did not exist!"));
         }
 
-        public List<Item> GetInventory() => InventoryList;
+        public List<Item> GetInventory() => _inventoryList;
 
         public Item GetItemFromInventory(string itemName)
         {
-            return InventoryList.FirstOrDefault(x => x.Name == itemName);
+            return _inventoryList.FirstOrDefault(x => x.Name == itemName)!;
         }
 
+            
         public void DisplayInventory()
         {
-            InventoryList.ForEach(item =>
+            _inventoryList.ForEach(item =>
             {
-                if (item is Weapon weapon) Console.WriteLine($"\nName: {weapon.Name}\nRequired level: {weapon.RequiredLevel}" +
-                $"\nCategory: {weapon.Category}\nBase dmg: {weapon.BaseDamage}\nAps: {weapon.AttacksPerSecond}\nWeaponDps:{weapon.DamagePerSecond}");
-
-                if (item is Armor armor) Console.WriteLine($"\nName: {armor.Name}\nRequired level: {armor.RequiredLevel}" +
-               $"\nCategory: {armor.Category}\nSlot:{armor.Slot}\nStrength: {armor.PrimaryAttribute.Strength} " +
-               $"\nDexterity:{armor.PrimaryAttribute.Dexterity}\nIntelligence:{armor.PrimaryAttribute.Intelligence}");
-
+                switch (item)
+                {
+                    case Weapon weapon:
+                        Console.WriteLine($"\nName: {weapon.Name}\nRequired level: {weapon.RequiredLevel}" +
+                                          $"\nCategory: {weapon.Category}\nBase dmg: {weapon.BaseDamage}\nAps: {weapon.AttacksPerSecond}\nWeaponDps:{weapon.DamagePerSecond}");
+                        break;
+                    case Armor armor:
+                        Console.WriteLine($"\nName: {armor.Name}\nRequired level: {armor.RequiredLevel}" +
+                                          $"\nCategory: {armor.Category}\nSlot:{armor.Slot}\nStrength: {armor.PrimaryAttribute.Strength} " +
+                                          $"\nDexterity:{armor.PrimaryAttribute.Dexterity}\nIntelligence:{armor.PrimaryAttribute.Intelligence}");
+                        break;
+                }
             });
         }
     }

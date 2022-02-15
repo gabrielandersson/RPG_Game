@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using RPG_Game;
+﻿using Newtonsoft.Json;
+using RPG_Game.Enums;
+using RPG_Game.Exceptions;
+using RPG_Game.HeroClasses;
+using RPG_Game.Items;
+using RPG_Game.Shared;
 using Xunit;
 namespace RPG_Game_Tests
 {
@@ -20,7 +19,7 @@ namespace RPG_Game_Tests
             newWarrior.Inventory.AddItemToInventory(newWeapon);
             var expected = new InvalidWeaponException("Too low lvl for this weapon");
             //Act
-            var actual = newWarrior.EquipItem(newWeapon.Name);
+            var actual = newWarrior.EquipHandler.EquipItem(newWeapon.Name, newWarrior);
 
             //Assert
             Assert.Equal(expected.Message, actual);
@@ -36,7 +35,7 @@ namespace RPG_Game_Tests
             newWarrior.Inventory.AddItemToInventory(newArmor);
             var expected = new InvalidArmorException("Too low lvl for this armor");
             //Act
-            var actual = newWarrior.EquipItem(newArmor.Name);
+            var actual = newWarrior.EquipHandler.EquipItem(newArmor.Name, newWarrior);
 
             //Assert
             Assert.Equal(expected.Message, actual);
@@ -52,7 +51,7 @@ namespace RPG_Game_Tests
             newWarrior.Inventory.AddItemToInventory(newArmor);
             var expected = new InvalidArmorException("You can't equip armor of this category!");
             //Act
-            var actual = newWarrior.EquipItem(newArmor.Name);
+            var actual = newWarrior.EquipHandler.EquipItem(newArmor.Name, newWarrior);
 
             //Assert
             Assert.Equal(expected.Message, actual);
@@ -70,8 +69,8 @@ namespace RPG_Game_Tests
             newWarrior.Inventory.AddItemToInventory(newArmor);
             var expected = new InvalidArmorException("You can't equip a weapon of this category!");
             //Act
-            var actual = newWarrior.EquipItem(newArmor.Name);
-
+            var actual = newWarrior.EquipHandler.EquipItem(newArmor.Name, newWarrior);
+            var exception = Record.Exception(() => newWarrior.EquipHandler.EquipItem(newArmor.Name, newWarrior));
             //Assert
             Assert.Equal(expected.Message, actual);
         }
@@ -86,7 +85,7 @@ namespace RPG_Game_Tests
             newWarrior.Inventory.AddItemToInventory(newWeapon);
             var expected = "New weapon equipped!";
             //Act
-            var actual = newWarrior.EquipItem(newWeapon.Name);
+            var actual = newWarrior.EquipHandler.EquipItem(newWeapon.Name,newWarrior);
 
             //Assert
             Assert.Equal(expected, actual);
@@ -104,7 +103,7 @@ namespace RPG_Game_Tests
             newWarrior.Inventory.AddItemToInventory(newArmor);
             var expected = "New armour equipped!";
             //Act
-            var actual = newWarrior.EquipItem(newArmor.Name);
+            var actual = newWarrior.EquipHandler.EquipItem(newArmor.Name, newWarrior);
 
             //Assert
             Assert.Equal(expected, actual);
@@ -122,10 +121,10 @@ namespace RPG_Game_Tests
             newWarrior.Inventory.AddItemToInventory(newWeapon);
             newWarrior.Inventory.AddItemToInventory(newWeapon2);
 
-            newWarrior.EquipItem(newWeapon.Name);
+            newWarrior.EquipHandler.EquipItem(newWeapon.Name, newWarrior);
             var expected = "Axe of Gimli";
             // Act
-            newWarrior.EquipItem(newWeapon2.Name);
+            newWarrior.EquipHandler.EquipItem(newWeapon2.Name, newWarrior);
             var actual = newWarrior.EquippedItems[Slot.Weapon].Name;
 
             // Assert
@@ -146,14 +145,14 @@ namespace RPG_Game_Tests
             newWarrior.Inventory.AddItemToInventory(armorOne);
             newWarrior.Inventory.AddItemToInventory(armorTwo);
 
-            newWarrior.EquipItem(armorOne.Name);
+            newWarrior.EquipHandler.EquipItem(armorOne.Name, newWarrior);
             TotalAttribute expected = new TotalAttribute();
             expected.Strength = 12.0;
             expected.Dexterity = 3.0;
             expected.Intelligence = 6.0;          // base: str:5, dex:2 , int: 1  //after: 9, 5, 4 // 
 
             // Act
-            newWarrior.EquipItem(armorTwo.Name);
+            newWarrior.EquipHandler.EquipItem(armorTwo.Name, newWarrior);
             TotalAttribute actual = newWarrior.TotalAttribute;
             var expectedStr = JsonConvert.SerializeObject(expected);
             var actualStr = JsonConvert.SerializeObject(actual);
@@ -176,14 +175,14 @@ namespace RPG_Game_Tests
             newWarrior.Inventory.AddItemToInventory(armorOne);
             newWarrior.Inventory.AddItemToInventory(armorTwo);
 
-            newWarrior.EquipItem(armorOne.Name);
+            newWarrior.EquipHandler.EquipItem(armorOne.Name, newWarrior);
             TotalAttribute expected = new TotalAttribute();
             expected.Strength = 12.0;
             expected.Dexterity = 6.0;
             expected.Intelligence = 7.0;          // base:5 str:5, dex:2 , int: 1  //after: 12, 6, 7  // 
 
             // Act
-            newWarrior.EquipItem(armorTwo.Name);
+            newWarrior.EquipHandler.EquipItem(armorTwo.Name, newWarrior);
             TotalAttribute actual = newWarrior.TotalAttribute;
             var expectedStr = JsonConvert.SerializeObject(expected);
             var actualStr = JsonConvert.SerializeObject(actual);

@@ -1,12 +1,18 @@
-﻿using RPG_Game;
+﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using RPG_Game.Enums;
+using RPG_Game.Items;
+using RPG_Game.Shared;
 using Xunit;
+using Xunit.Sdk;
 
 namespace RPG_Game_Tests
 {
     public class InventoryTests
     {
         #region AddItem
+
         [Fact]
         public void AddItemToInventory_NewInventoryAddNewWeapon_ShouldReturnTrue()
         {
@@ -19,8 +25,11 @@ namespace RPG_Game_Tests
             //Assert
             Assert.Equal(expected, actual);
         }
+
         #endregion
+
         #region AddingTooMuchShouldFail
+
         [Fact]
         public void AddItemToInventory_InventoryWithTenWeaponsAddWeaponEleven_ShouldReturnFalse()
         {
@@ -43,8 +52,11 @@ namespace RPG_Game_Tests
             // Arrange
             Assert.Equal(expected, actual);
         }
+
         #endregion
+
         #region GetInventory
+
         [Fact]
         public void GetInventory_NewInventoryWithOneNewWeapon_ShouldReturnListWithOneWeapon()
         {
@@ -58,9 +70,11 @@ namespace RPG_Game_Tests
             // Assert
             Assert.Equal(expected, actual);
         }
+
         #endregion
 
         #region GetItemFromInventoryGetsRightItem
+
         [Fact]
         public void GetItemFromInventory_newInventoryWithOneWeaponSuppliedWithRightName_ShouldReturnItemWithRightName()
         {
@@ -74,8 +88,11 @@ namespace RPG_Game_Tests
             // Assert
             Assert.Equal(expected.Name, actual.Name);
         }
+
         #endregion
+
         #region GetItemFromInventoryGetsRightType
+
         [Fact]
         public void GetItemFromInventory_newInventoryWithOneWeaponSuppliedWithRightName_ShouldReturnItemOfRightType()
         {
@@ -89,8 +106,11 @@ namespace RPG_Game_Tests
             // Assert
             Assert.Equal(expected, actual);
         }
+
         #endregion
+
         #region GetItemFromInventoryReturnsNullAtFailure
+
         [Fact]
         public void GetItemFromInventory_newInventoryWithOneWeaponWrongName_ShouldReturnNull()
         {
@@ -101,8 +121,44 @@ namespace RPG_Game_Tests
             // Act
             var actual = newInventory.GetItemFromInventory("not a common axe");
             // Assert
-            Assert.Equal(actual, null);
+            Assert.Null(actual);
+        }
+
+        #endregion
+
+        #region DeleteItemShouldRemoveItem
+        [Fact]
+        public void DeleteItemFromInventory_NewInventoryTwoWeapons_ShouldOnlyHaveOneLeft()
+        {
+            // Arrange
+            var newInventory = new Inventory();
+            var newWeapon = new Weapon("common axe", 1, WeaponCat.Axes, 7, 1.1);
+            var newWeapon2 = new Weapon("common bow", 1, WeaponCat.Bows, 4, 5.5);
+            newInventory.AddItemToInventory(newWeapon);
+            newInventory.AddItemToInventory(newWeapon2);
+            var expected = 1;
+
+            //Act
+            newInventory.DeleteItemFromInventory("common bow");
+            var actual = newInventory.GetCount();
+            // Assert 
+
+            Assert.Equal(expected, actual);
         }
         #endregion
+        #region DeleteItemFailure
+        [Fact]
+        public void DeleteItemFromInventory_NewInventoryWithoutItems_ShouldReturnExceptionMsg()
+        {
+            //Arrange
+            var newInventory = new Inventory();
+            //Act
+            var exception = Record.Exception(() => newInventory.DeleteItemFromInventory("non existent bow"));
+            //Assert
+            Assert.IsType<NullReferenceException>(exception);
+        }
+        #endregion
+
     }
 }
+

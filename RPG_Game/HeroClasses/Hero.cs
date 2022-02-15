@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RPG_Game.Enums;
+using RPG_Game.Items;
+using RPG_Game.Shared;
 
-namespace RPG_Game
+namespace RPG_Game.HeroClasses
 {
     public abstract class Hero
     {
         public readonly string Name;
-        public int Level { get; set; }
+        public int Level { get; protected set; }
         public double Damage { get; set; }
-        public Dictionary<Slot, Item> EquippedItems = new Dictionary<Slot, Item>();
-        public TotalAttribute TotalAttribute { get; set; }
-        public PrimaryAttribute PrimaryAttribute { get; set; }
-        protected HeroClass HeroClass { get; set; }
-        public Inventory Inventory { get; set; }
-        public Hero(string name)
+        public Dictionary<Slot, Item>? EquippedItems { get; set; }
+        public TotalAttribute? TotalAttribute { get; protected set; }
+        public EquipHandler EquipHandler { get; protected set; }
+        public PrimaryAttribute? PrimaryAttribute { get; protected set; }
+        public Inventory Inventory { get; }
+        protected Hero(string name)
         {
             Name = name;
             Level = 1;
             Inventory = new Inventory();
+            EquipHandler = new EquipHandler();
         }
 
-         public abstract void LevelUp();
-        
         public virtual string ShowHeroStats()
         {
             Console.WriteLine($"\nName: {Name}\nLevel: {Level}\nStrength: {TotalAttribute.Strength}\nDexterity: {TotalAttribute.Dexterity}\nIntelligence: {TotalAttribute.Intelligence}\nDamage: {Damage}");

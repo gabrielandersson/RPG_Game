@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RPG_Game.Enums;
 
-namespace RPG_Game
+namespace RPG_Game.Items
 {
     public class Weapon : Item
     {
@@ -24,10 +20,6 @@ namespace RPG_Game
             Slot = Slot.Weapon;
         }
 
-        public override Weapon Duplicate()
-        {
-            return new Weapon(Name, RequiredLevel, Category, BaseDamage, AttacksPerSecond);
-        }
     }
 
 }

@@ -1,29 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RPG_Game.Enums;
 
-namespace RPG_Game
+namespace RPG_Game.Items
 {
     public abstract class Item
     {
         public string Name { get; set; }
         public int RequiredLevel { get; set; }
         public Slot Slot { get; set; }
-        public Item(string name, int requiredLevel)
+        protected Item(string name, int requiredLevel)
         {
             Name = name;
             RequiredLevel = requiredLevel;
         }
-
-        public Item(string name, int requiredLevel, Slot slot)
-        {
-            Name = name;
-            RequiredLevel = requiredLevel;
-            Slot = slot;
-        }
-        public abstract Item Duplicate();
     }
 }
 

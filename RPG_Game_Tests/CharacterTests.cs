@@ -1,7 +1,7 @@
-using RPG_Game;
-using System;
-using System.Net.WebSockets;
-using System.Reflection;
+using RPG_Game.Enums;
+using RPG_Game.HeroClasses;
+using RPG_Game.Items;
+using RPG_Game.Shared;
 using Xunit;
 
 namespace RPG_Game_Tests
@@ -167,7 +167,7 @@ namespace RPG_Game_Tests
         {
             //Arrange
             var newWarrior = new Warrior("gabriel");
-            double expected = 1.0 * (1 + (5.0 / 100)); // 1*(1+(5/100))
+            double expected = 1.0 * (1.0 + (5.0 / 100)); // 1*(1+(5/100))
             //Act 
             var actual = newWarrior.Damage;
             //Assert
@@ -183,7 +183,7 @@ namespace RPG_Game_Tests
             var newWarrior = new Warrior("gabriel");
             var newWeapon = new Weapon("NerfSword", 1, WeaponCat.Swords, 1, 2);
             newWarrior.Inventory.AddItemToInventory(newWeapon);
-            newWarrior.EquipItem(newWeapon.Name);
+            newWarrior.EquipHandler.EquipItem(newWeapon.Name, newWarrior);
             double expected = 2.0 * (1.0 + (5.0 / 100));
             // Act 
             var actual = newWarrior.Damage;
@@ -204,9 +204,9 @@ namespace RPG_Game_Tests
 
             newWarrior.Inventory.AddItemToInventory(newWeapon);
             newWarrior.Inventory.AddItemToInventory(newArmor);
-            newWarrior.EquipItem(newWeapon.Name);
-            newWarrior.EquipItem(newArmor.Name);
-            double expected = 2.1;
+            newWarrior.EquipHandler.EquipItem(newWeapon.Name, newWarrior);
+            newWarrior.EquipHandler.EquipItem(newArmor.Name, newWarrior);
+            double expected = 2.18;
             // Act
             double actual = newWarrior.Damage;
             // Assert
@@ -223,7 +223,7 @@ namespace RPG_Game_Tests
                new PrimaryAttribute(4, 3, 3));
 
             newWarrior.Inventory.AddItemToInventory(newArmor);
-            newWarrior.EquipItem(newArmor.Name);
+            newWarrior.EquipHandler.EquipItem(newArmor.Name, newWarrior);
             TotalAttribute expected = new TotalAttribute();
             expected.Strength = 9;
             expected.Dexterity = 5;
@@ -232,6 +232,18 @@ namespace RPG_Game_Tests
             TotalAttribute actual = newWarrior.TotalAttribute;
             // Assert
             Assert.Equal(expected.Strength, actual.Strength);
+        }
+        #endregion
+
+        #region ShowHeroStats
+        [Fact]
+        public void ShowHeroStats_NewWarrior_ShouldReturnStats()
+        {
+            var newWarrior = new Warrior("testDummy");
+            var expected = $"\nName: testDummy\nLevel: 1\nStrength: 5\nDexterity: 2\nIntelligence: 1\nDamage: 1,05";
+            var actual = newWarrior.ShowHeroStats();
+
+            Assert.Equal(expected, actual);
         }
         #endregion
     }
