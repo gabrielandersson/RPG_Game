@@ -17,4 +17,4 @@ validation logic from it.
 
 I hope you will enjoy this project! 
 
-@gabrielandersson
+@github/gabrielandersson
