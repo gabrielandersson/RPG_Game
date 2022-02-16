@@ -3,6 +3,7 @@ using RPG_Game.HeroClasses;
 
 namespace RPG_Game.IReadHero
 {
+    // A class that assumes responsibility for outputting the hero's stats directly to the console
     public class RealConsoleLogger : IReadHeroState
     {
         public void ReadState(Hero hero, string filename)

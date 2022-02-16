@@ -8,9 +8,6 @@ namespace RPG_Game.IReadHero
     //If you want to try it out i left a little example in the Main() in Region-ForFun
     public class StatsSaver
     {
-       // public string FileName;
-        //public string FilePath;
-
         public void LogStats(Hero hero, string fileName)
         {
             try

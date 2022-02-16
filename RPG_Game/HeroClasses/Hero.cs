@@ -41,8 +41,7 @@ namespace RPG_Game.HeroClasses
         }
         #endregion
         /// <summary>
-        /// Writes out a hero's stats to the standard output stream, only reason i made this virtual is if
-        /// some future hero might have new stats they want to display. In the future maybe it would
+        ///  Returns string with all the  hero's stats
         /// </summary>
         /// <returns></returns>
         public virtual string ShowHeroStats()
