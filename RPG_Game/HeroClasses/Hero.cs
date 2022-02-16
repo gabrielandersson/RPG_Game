@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using RPG_Game.Enums;
 using RPG_Game.Items;
 using RPG_Game.Shared;

@@ -1,7 +1,4 @@
-﻿using RPG_Game.HeroClasses;
-using RPG_Game.Items;
-
-namespace RPG_Game.Shared
+﻿namespace RPG_Game.Shared
 {
     /// <summary>
     /// Encapsulation meant for the total sum of respective hero attribute:w

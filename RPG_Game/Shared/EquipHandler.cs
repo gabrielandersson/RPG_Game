@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Xml;
 using RPG_Game.Enums;
 using RPG_Game.Exceptions;
 using RPG_Game.HeroClasses;
