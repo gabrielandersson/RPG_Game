@@ -11,7 +11,7 @@ namespace RPG_Game
         //just some test data for another class, main() looked lonely..
         static void Main(string[] args)
         {
-          
+
             var rogue = new Rogue("gabriel");
             var newWeapon = new Weapon("NerfSword", 1, WeaponCat.Swords, 1, 2);
             var newArmor = new Armor("Sweaty Chainmail Pants", 1, Slot.Legs, ArmorCat.Mail,
