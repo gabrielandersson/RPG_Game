@@ -236,13 +236,13 @@ namespace RPG_Game.Shared
                         hero.Inventory.AddItemToInventory(backToInventory);
                         hero.EquippedItems[requestedItem.Slot] = requestedItem;
                         hero.Inventory.DeleteItemFromInventory(requestedItem.Name);
-                        UpdateStats(requestedItem, hero);
+                        UpdateStats(hero);
                         return $"New {type} equipped!";
                     }
 
                     if (hero.EquippedItems != null) hero.EquippedItems.Add(requestedItem.Slot, requestedItem);
                     hero.Inventory.DeleteItemFromInventory(requestedItem.Name);
-                    UpdateStats(requestedItem, hero);
+                    UpdateStats(hero);
                     return $"New {type} equipped!";
                 }
 
@@ -293,7 +293,7 @@ namespace RPG_Game.Shared
         /// </summary>
         /// <param name="item"></param>
         /// <param name="hero"></param>
-        public void UpdateStats(Item item, Hero hero)
+        public void UpdateStats(Hero hero)
         {
             try
             {
@@ -315,12 +315,12 @@ namespace RPG_Game.Shared
                         if (counter == 0)
                         {
                             hero.TotalAttribute.Strength += ((Armor)entry.Value).PrimaryAttribute.Strength +
-                                                            hero.PrimaryAttribute.Strength;
+                                                                             hero.PrimaryAttribute.Strength;
                             hero.TotalAttribute.Dexterity += ((Armor)entry.Value).PrimaryAttribute.Dexterity +
-                                                             hero.PrimaryAttribute.Dexterity;
+                                                                             hero.PrimaryAttribute.Dexterity;
                             hero.TotalAttribute.Intelligence +=
-                                ((Armor)entry.Value).PrimaryAttribute.Intelligence +
-                                hero.PrimaryAttribute.Intelligence;
+                                                            ((Armor)entry.Value).PrimaryAttribute.Intelligence +
+                                                                             hero.PrimaryAttribute.Intelligence;
                             counter++;
                         }
                         //Afterwards only add the other armor piece attributes
