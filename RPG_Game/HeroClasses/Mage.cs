@@ -2,6 +2,7 @@
 using RPG_Game.Enums;
 using RPG_Game.Items;
 using RPG_Game.Shared;
+using RPG_Game.IReadHero;
 
 namespace RPG_Game.HeroClasses
 {
@@ -19,6 +20,21 @@ namespace RPG_Game.HeroClasses
             };
             Damage = 1.0 * (1.0 + (TotalAttribute.Intelligence / 100.0));
         }
+        #region ConstructorForFun
+        public Mage(string name, IReadHeroState log) : base(name, log)
+        {
+            EquippedItems = new Dictionary<Slot, Item>();
+            ReadHeroState = log;
+            PrimaryAttribute = new PrimaryAttribute(1, 1, 8);
+            TotalAttribute = new TotalAttribute
+            {
+                Strength = PrimaryAttribute.Strength,
+                Dexterity = PrimaryAttribute.Dexterity,
+                Intelligence = PrimaryAttribute.Intelligence
+            };
+            Damage = 1.0 * (1.0 + (TotalAttribute.Intelligence / 100.0));
+        }
+        #endregion
         /// <summary>
         /// The method responsible for upping the specific stats of this hero type
         /// some nice null checks there too.

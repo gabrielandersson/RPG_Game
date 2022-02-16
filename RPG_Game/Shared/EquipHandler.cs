@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Xml;
 using RPG_Game.Enums;
 using RPG_Game.Exceptions;
 using RPG_Game.HeroClasses;
@@ -9,7 +11,6 @@ namespace RPG_Game.Shared
 {
     public class EquipHandler
     {
-
         /// <summary>
         ///  This method checks if the item passed the specific requirements for the Mage class.
         ///  Its primarily used by the EquipItem() and is thus not made accessible to anyone else.
@@ -113,7 +114,6 @@ namespace RPG_Game.Shared
                     {
                         return "true";
                     }
-
                     throw new InvalidArmorException("You can't equip armor of this category!");
                 }
 
@@ -291,7 +291,6 @@ namespace RPG_Game.Shared
         /// clears the total attribute when called and iterates over the equipped items
         /// calls on the GetPrimaryValue(). Can throw Null reference/KeyNotFoundException 
         /// </summary>
-        /// <param name="item"></param>
         /// <param name="hero"></param>
         public void UpdateStats(Hero hero)
         {
@@ -333,7 +332,7 @@ namespace RPG_Game.Shared
                         }
                     }
                 }
-                
+
                 if (hero.EquippedItems != null && (!hero.EquippedItems.ContainsKey(Slot.Weapon)))
                 {
                     //Doing standard damage calculation since this assumes no weapon exists.

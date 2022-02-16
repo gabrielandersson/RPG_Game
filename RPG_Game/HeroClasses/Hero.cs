@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using RPG_Game.Enums;
 using RPG_Game.Items;
 using RPG_Game.Shared;
-
+using RPG_Game.IReadHero;
 namespace RPG_Game.HeroClasses
 {
     /// <summary>
@@ -21,21 +21,32 @@ namespace RPG_Game.HeroClasses
         public EquipHandler EquipHandler { get; protected set; }
         public PrimaryAttribute? PrimaryAttribute { get; protected set; }
         public Inventory Inventory { get; }
-        protected Hero(string name)
+        public IReadHeroState ReadHeroState { get; set; }
+
+        public Hero(string name)
         {
             Name = name;
             Level = 1;
             Inventory = new Inventory();
             EquipHandler = new EquipHandler();
         }
+        #region ConstructorForFun
+        protected Hero(string name, IReadHeroState log)
+        {
+            Name = name;
+            Level = 1;
+            Inventory = new Inventory();
+            EquipHandler = new EquipHandler();
+            ReadHeroState = log;
+        }
+        #endregion
         /// <summary>
         /// Writes out a hero's stats to the standard output stream, only reason i made this virtual is if
-        /// some future hero might have new stats they want to display. 
+        /// some future hero might have new stats they want to display. In the future maybe it would
         /// </summary>
         /// <returns></returns>
         public virtual string ShowHeroStats()
         {
-            Console.WriteLine($"\nName: {Name}\nLevel: {Level}\nStrength: {TotalAttribute.Strength}\nDexterity: {TotalAttribute.Dexterity}\nIntelligence: {TotalAttribute.Intelligence}\nDamage: {Damage}");
             return $"\nName: {Name}\nLevel: {Level}\nStrength: {TotalAttribute.Strength}\nDexterity: {TotalAttribute.Dexterity}\nIntelligence: {TotalAttribute.Intelligence}\nDamage: {Damage}";
         }
     }

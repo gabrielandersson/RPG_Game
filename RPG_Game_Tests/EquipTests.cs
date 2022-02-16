@@ -70,7 +70,6 @@ namespace RPG_Game_Tests
             var expected = new InvalidArmorException("You can't equip a weapon of this category!");
             //Act
             var actual = newWarrior.EquipHandler.EquipItem(newArmor.Name, newWarrior);
-            var exception = Record.Exception(() => newWarrior.EquipHandler.EquipItem(newArmor.Name, newWarrior));
             //Assert
             Assert.Equal(expected.Message, actual);
         }
@@ -85,7 +84,7 @@ namespace RPG_Game_Tests
             newWarrior.Inventory.AddItemToInventory(newWeapon);
             var expected = "New weapon equipped!";
             //Act
-            var actual = newWarrior.EquipHandler.EquipItem(newWeapon.Name,newWarrior);
+            var actual = newWarrior.EquipHandler.EquipItem(newWeapon.Name, newWarrior);
 
             //Assert
             Assert.Equal(expected, actual);
